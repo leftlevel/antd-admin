@@ -16,4 +16,22 @@ module.exports = {
     },
     lintOnSave: false,
     productionSourceMap: false, //打包不生成.map文件，加快打包速度
+
+    // css: {
+    //   requireModuleExtension: true,
+    //   sourceMap: true,
+    //   loaderOptions: {
+    //     less: {
+    //       lessOptions: {
+    //         javascriptEnabled: true,
+    //         modifyVars: {
+    //           'web-color-blue': '#1890ff',
+    //           'web-margin': '20px',
+    //           'web-padding': '20px',
+    //           'web-header-height': '65px',
+    //         },
+    //       },
+    //     },
+    //   },
+    // },
 }

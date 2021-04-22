@@ -4,6 +4,7 @@
       <a-layout-sider 
         class="web-sider"
         width="250"
+        v-model:collapsed="collapse"
         collapsible
         :trigger="null"
       >
@@ -21,7 +22,7 @@
     <a-layout class="web-layout">
       <a-layout-header class="web-header">
         <a-row>
-          <!-- <a-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
+          <a-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
             <menu-unfold-outlined
               v-if="collapse"
               class="trigger"
@@ -33,7 +34,7 @@
               @click="toggleCollapse"
             />
           </a-col>
-          <a-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
+          <!-- <a-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
             <vab-avatar />
           </a-col> -->
         </a-row>
@@ -44,11 +45,12 @@
 
 <script lang='ts'>
 import { useRoute } from 'vue-router'
-import { defineComponent, ref, watch } from 'vue'
-import WebLogo from '@/components/layout/WebLogo/index.vue'
-import WebMenu from '@/components/layout/WebMenu/index.vue'
+import { computed, defineComponent, ref, watch } from 'vue'
+import { useStore } from 'vuex'
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue'
 import { routes } from '@/router/index'
+import WebLogo from '@/components/layout/WebLogo/index.vue'
+import WebMenu from '@/components/layout/WebMenu/index.vue'
 
 export default defineComponent({
   name: 'Layout',
@@ -65,6 +67,13 @@ export default defineComponent({
     const openKeys = ref<string[]>([])
     console.log(routes)
 
+    const store = useStore()
+    let collapse = computed(() => store.state.moduleSetting.collapse)
+    // console.log(collapse.value)
+    const toggleCollapse = () => {
+      store.commit('toggleCollapse', !collapse.value)
+    }
+
     // 监听路由对象设置当前选中的菜单项 key 值
     watch(route, ({ path, matched }) => {
       // console.log(path, matched)
@@ -75,7 +84,9 @@ export default defineComponent({
     return {
       selectedKeys,
       openKeys,
-      routes
+      routes,
+      collapse,
+      toggleCollapse
     }
   }
 })
@@ -88,7 +99,7 @@ export default defineComponent({
     height: 100vh;
     overflow: auto;
     .web-menu {
-      // height: cacl(100hv - );
+      height: cacl(100hv - 65px);
     }
   }
   .web-mask {
@@ -111,7 +122,22 @@ export default defineComponent({
     .web-header {
       padding: 0;
       background: #fff;
-
+      .ant-col + .ant-col {
+        display: flex;
+        justify-content: flex-end;
+        padding: 0 20px;
+      }
+      .trigger {
+        height: 65px;
+        padding: 0 20px;
+        font-size: 18px;
+        line-height: 65px;
+        cursor: pointer;
+        transition: color 0.3s;
+        &:hover {
+          color: #1890ff;
+        }
+      }
       
     }
   }
