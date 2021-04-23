@@ -1,22 +1,21 @@
 <template>
-  <component
-    :is="menuComponent"
-    v-if="!item.hidden"
-    :item="item"
-    :route-children="routeChildren"
-  >
-    <template v-if="item.children && item.children.length">
-      <web-menu
-        v-for="route in item.children"
-        :key="route.path"
-        :item="route"
-      >
-      </web-menu>
+  <a-sub-menu v-if="title">
+    <template #title>
+      <span>
+        <user-outlined />
+        <span>{{ title }}</span>
+      </span>
     </template>
-  </component>
+
+    <a-menu-item v-for="childrenRoute in childrenRoutes" :key="childrenRoute.path">
+      <user-outlined />
+      <span>{{ childrenRoute.meta.title }}</span>
+    </a-menu-item>
+  </a-sub-menu>
 </template>
 
 <script lang='ts'>
+import { UserOutlined } from '@ant-design/icons-vue'
 import { defineComponent, reactive, ref } from 'vue'
 import MenuItem from './components/MenuItem.vue'
 import Submenu from './components/Submenu.vue'
@@ -25,42 +24,38 @@ export default defineComponent({
   name: 'WebMenu',
   components: {
     MenuItem,
-    Submenu
+    Submenu,
+    UserOutlined
   },
 
   props: {
     item: {
       type: Object,
       required: true
-    }
+    },
+
   },
 
   setup(props) {
-    const routeChildren = ref({})
-    const menuComponent = ref<string>('')
+    const { path, children } = props.item
 
-    const handleChildren = (children = []) => {
-      if (children === null) {
-        return []
-      } else {
-        return children.filter((item: any) => item.hidden !== true)
-      }
+    const title = ref<string>('')
+    const childrenRoutes = ref([])
+
+    if (props.item.meta) {
+      title.value = props.item.meta.title
+    }
+    console.log('children', children)
+
+    if (children) {
+      childrenRoutes.value = children
     }
 
-    const showChildren = handleChildren(props.item.children)
-    if (showChildren.length === 0) {
-      menuComponent.value = 'MenuItem'
-      routeChildren.value = props.item
-    } else if (showChildren.length === 1 && props.item.alwaysShow !== true) {
-      menuComponent.value = 'MenuItem'
-      routeChildren.value = showChildren[0]
-    } else {
-      menuComponent.value = 'Submenu'
-    }
-    
+    console.log(path)
+
     return {
-      routeChildren,
-      menuComponent
+      title,
+      childrenRoutes
     }
   }
 })

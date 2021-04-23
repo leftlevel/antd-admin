@@ -47,9 +47,13 @@
 <script lang='ts'>
 const { dependencies } = require('../../../package.json')
 
-import { defineComponent, ref, reactive } from 'vue'
+import { useRouter } from 'vue-router'
+import { defineComponent, ref, reactive, computed } from 'vue'
+import { useStore } from 'vuex'
 import { UserOutlined, LockOutlined } from '@ant-design/icons-vue'
+import { notification } from 'ant-design-vue';
 import { title } from '@/utils/setting'
+import { routes } from '@/router'
 
 type Form = {
     username: string,
@@ -64,13 +68,22 @@ export default defineComponent({
   },
 
   setup() {
-    // const title = ref<string>('antd-admin')
     const form = reactive<Form>({
-      username: '',
-      password: ''
+      username: 'admin',
+      password: '123'
     })
+    const router = useRouter()
+    const store = useStore()
+
+    const thisTime = computed(() => store.getters.thisTime)
+
     const handleSubmit = (): void => {
-        console.log(form.username, form.password)
+      console.log(form.username, form.password)
+      notification.open({
+        message: '欢迎登录 antd-admin',
+        description: thisTime.value,
+      })
+      router.push('/')
     }
     
     return {

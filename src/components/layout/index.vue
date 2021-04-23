@@ -1,25 +1,23 @@
 <template>
   <a-layout class="web-layout-wrap">
-    <div class="web-mask" v-if="false"></div>
-      <a-layout-sider 
-        class="web-sider"
-        width="250"
-        v-model:collapsed="collapse"
-        collapsible
-        :trigger="null"
-      >
+    <a-layout-sider 
+      class="web-layout-sider"
+      v-model:collapsed="collapse"
+      :trigger="null"
+      collapsible
+    >
       <web-logo />
-      <a-menu 
+      <a-menu
         class="web-menu"
         theme="dark"
         mode="inline"
         v-model:selectedKeys="selectedKeys"
         v-model:openKeys="openKeys"
       >
-        <!-- <web-menu v-for="route in routes" :key="route.path" :item="route" /> -->
+        <web-menu v-for="route in routes" :key="route.path" :item="route" />
       </a-menu>
     </a-layout-sider>
-    <a-layout class="web-layout">
+    <a-layout>
       <a-layout-header class="web-header">
         <a-row>
           <a-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
@@ -34,44 +32,90 @@
               @click="toggleCollapse"
             />
           </a-col>
-          <!-- <a-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
-            <vab-avatar />
-          </a-col> -->
+          <a-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
+            <!-- <vab-avatar /> -->
+            123
+          </a-col>
         </a-row>
       </a-layout-header>
+      <a-layout-content
+        :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }"
+      >
+        Content
+      </a-layout-content>
     </a-layout>
   </a-layout>
 </template>
-
-<script lang='ts'>
+<script lang="ts">
+import {
+  UserOutlined,
+  VideoCameraOutlined,
+  UploadOutlined,
+  MenuUnfoldOutlined,
+  MenuFoldOutlined,
+} from '@ant-design/icons-vue'
 import { useRoute } from 'vue-router'
-import { computed, defineComponent, ref, watch } from 'vue'
 import { useStore } from 'vuex'
-import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue'
 import { routes } from '@/router/index'
+import { defineComponent, ref, watch, computed,onBeforeMount, onBeforeUnmount, onMounted } from 'vue'
 import WebLogo from '@/components/layout/WebLogo/index.vue'
 import WebMenu from '@/components/layout/WebMenu/index.vue'
 
 export default defineComponent({
-  name: 'Layout',
   components: {
-    WebLogo,
-    WebMenu,
+    UserOutlined,
+    VideoCameraOutlined,
+    UploadOutlined,
     MenuUnfoldOutlined,
-    MenuFoldOutlined
+    MenuFoldOutlined,
+    WebLogo,
+    WebMenu
   },
 
   setup() {
     const route = useRoute()
+    const store = useStore()
+
     const selectedKeys = ref<string[]>([])
     const openKeys = ref<string[]>([])
-    console.log(routes)
+    const width = ref<number>(0)
+    // console.log(routes)
 
-    const store = useStore()
-    let collapse = computed(() => store.state.moduleSetting.collapse)
-    // console.log(collapse.value)
+    onBeforeMount(() => {
+      window.addEventListener('resize', handleLayouts)
+    })
+
+    onMounted(() => {
+      handleLayouts
+    })
+
+    onBeforeUnmount(() => {
+      window.removeEventListener('resize', handleLayouts)
+    })
+
+
+    const collapse = computed(() => store.state.moduleSetting.collapse)
+    const device = computed(() => store.state.moduleSetting.device)
+    const classObj = computed(() => {
+      return {
+        'web-mobile': device,
+        'web-collapse': collapse
+      }
+    })
+
     const toggleCollapse = () => {
       store.commit('toggleCollapse', !collapse.value)
+    }
+
+    // 切换布局
+    const handleLayouts = () => {
+      const bcrWidth = document.body.getBoundingClientRect().width
+      if (width.value !== bcrWidth) {
+        const isMobile = bcrWidth - 1 < 992
+        if (isMobile) store.dispatch('toggleDevice', 'mobile')
+        else store.dispatch('toggleDevice', 'desktop')
+        width.value = bcrWidth
+      }
     }
 
     // 监听路由对象设置当前选中的菜单项 key 值
@@ -81,64 +125,68 @@ export default defineComponent({
       openKeys.value = [matched[0].path]
     }, { immediate: true, deep: true })
 
+    // console.log(selectedKeys.value, openKeys.value)
     return {
       selectedKeys,
       openKeys,
       routes,
       collapse,
-      toggleCollapse
+      device,
+      toggleCollapse,
+      classObj
     }
-  }
+  },
 })
 </script>
+<style lang="less">
+#components-layout-demo-custom-trigger .trigger {
+  font-size: 18px;
+  line-height: 64px;
+  padding: 0 24px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
 
-<style lang="less" scoped>
-.web-layout-wrap {
-  .web-sider {
-    position: fixed;
-    height: 100vh;
-    overflow: auto;
-    .web-menu {
-      height: cacl(100hv - 65px);
-    }
-  }
-  .web-mask {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 998;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-    background: #000;
-    opacity: 0.5;
-  }
-  .web-layout {
-    padding-left: 250px;
-    transition: all 0.2s;
+#components-layout-demo-custom-trigger .trigger:hover {
+  color: #1890ff;
+}
 
-    .web-header {
-      padding: 0;
-      background: #fff;
-      .ant-col + .ant-col {
-        display: flex;
-        justify-content: flex-end;
-        padding: 0 20px;
-      }
-      .trigger {
-        height: 65px;
-        padding: 0 20px;
-        font-size: 18px;
-        line-height: 65px;
-        cursor: pointer;
-        transition: color 0.3s;
-        &:hover {
-          color: #1890ff;
-        }
-      }
-      
+#components-layout-demo-custom-trigger .logo {
+  height: 32px;
+  background: rgba(255, 255, 255, 0.3);
+  margin: 16px;
+}
+
+.site-layout .site-layout-background {
+  background: #fff;
+}
+
+.web-layout-sider {
+  height: 100vh;
+  left: 0;
+  overflow: auto;
+  .web-menu {
+    height: calc(100hv - 65px);
+  }
+}
+
+.web-header {
+  padding: 0;
+  background: #fff;
+  .ant-col + .ant-col {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 20px
+  }
+  .trigger {
+    height: 65px;
+    padding: 0 20px;
+    font-size: 18px;
+    line-height: 65px;
+    cursor: pointer;
+    transition: color 0.3s;
+    &:hover {
+      color: #1890ff;
     }
   }
 }
