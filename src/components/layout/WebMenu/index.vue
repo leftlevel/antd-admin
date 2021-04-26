@@ -1,5 +1,5 @@
 <template>
-  <a-sub-menu v-if="title">
+  <a-sub-menu v-if="title" :key="path">
     <template #title>
       <span>
         <user-outlined />
@@ -7,16 +7,18 @@
       </span>
     </template>
 
-    <a-menu-item v-for="childrenRoute in childrenRoutes" :key="childrenRoute.path">
-      <user-outlined />
-      <span>{{ childrenRoute.meta.title }}</span>
-    </a-menu-item>
+    <template v-if="item.children">
+      <a-menu-item v-for="childrenRoute in item.children" :key="childrenRoute.path">
+        <user-outlined />
+        <span>{{ childrenRoute.meta.title }}</span>
+      </a-menu-item>
+    </template>
   </a-sub-menu>
 </template>
 
 <script lang='ts'>
 import { UserOutlined } from '@ant-design/icons-vue'
-import { defineComponent, reactive, ref } from 'vue'
+import { defineComponent, reactive, ref, toRefs } from 'vue'
 import MenuItem from './components/MenuItem.vue'
 import Submenu from './components/Submenu.vue'
 
@@ -32,30 +34,29 @@ export default defineComponent({
     item: {
       type: Object,
       required: true
-    },
-
+    }
   },
 
   setup(props) {
-    const { path, children } = props.item
+    const { path, children } = toRefs(props.item)
 
     const title = ref<string>('')
-    const childrenRoutes = ref([])
+    // const childrenRoutes = ref([])
 
     if (props.item.meta) {
       title.value = props.item.meta.title
     }
-    console.log('children', children)
 
-    if (children) {
-      childrenRoutes.value = children
-    }
+    // if (children) {
+    //   childrenRoutes.value = children
+    // }
 
-    console.log(path)
+    console.log(path.value, children)
 
     return {
       title,
-      childrenRoutes
+      path
+      // childrenRoutes
     }
   }
 })

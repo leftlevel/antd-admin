@@ -13,6 +13,7 @@
         mode="inline"
         v-model:selectedKeys="selectedKeys"
         v-model:openKeys="openKeys"
+        @click="handleRoute"
       >
         <web-menu v-for="route in routes" :key="route.path" :item="route" />
       </a-menu>
@@ -41,7 +42,7 @@
       <a-layout-content
         :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }"
       >
-        Content
+        <router-view></router-view>
       </a-layout-content>
     </a-layout>
   </a-layout>
@@ -54,10 +55,9 @@ import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
 } from '@ant-design/icons-vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-import { routes } from '@/router/index'
-import { defineComponent, ref, watch, computed,onBeforeMount, onBeforeUnmount, onMounted } from 'vue'
+import { defineComponent, ref, watch, computed,onBeforeMount, onBeforeUnmount, onMounted, reactive } from 'vue'
 import WebLogo from '@/components/layout/WebLogo/index.vue'
 import WebMenu from '@/components/layout/WebMenu/index.vue'
 
@@ -74,12 +74,16 @@ export default defineComponent({
 
   setup() {
     const route = useRoute()
+    const router = useRouter()
     const store = useStore()
 
     const selectedKeys = ref<string[]>([])
     const openKeys = ref<string[]>([])
     const width = ref<number>(0)
-    // console.log(routes)
+    const routes = ref<Object[]>([])
+    
+    routes.value = router.options.routes
+    // console.log('routes', routes)
 
     onBeforeMount(() => {
       window.addEventListener('resize', handleLayouts)
@@ -118,6 +122,11 @@ export default defineComponent({
       }
     }
 
+    // 切换路由回调
+    const handleRoute = () => {
+        console.log(111)
+    }
+
     // 监听路由对象设置当前选中的菜单项 key 值
     watch(route, ({ path, matched }) => {
       // console.log(path, matched)
@@ -133,7 +142,8 @@ export default defineComponent({
       collapse,
       device,
       toggleCollapse,
-      classObj
+      classObj,
+      handleRoute
     }
   },
 })

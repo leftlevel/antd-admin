@@ -7,44 +7,43 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/',
-    name: 'Layout',
     component: () => import('@/components/layout/index.vue'),
+    redirect: '/dashboard',
     children: [{
       path: '/dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index.vue'),
       meta: { title: '首页', icon: '', affix: true },
-      redirect: '',
     }]
   },
   {
     path: '/blog',
     component: () => import('@/components/layout/index.vue'),
-    redirect: '/blog/test',
     name: 'Blog',
     meta: { title: '博客', icon: ''},
+    redirect: '/blog/test',
     children: [
       {
         path: 'test',
         name: 'Test',
         component: () => import('@/views/test/index.vue'),
         meta: { title: 'test页面', icon: ''},
-        redirect: ''
-      },
+      }
+    ]
+  },
+  {
+    path: '/main',
+    component: () => import('@/components/layout/index.vue'),
+    name: 'Main',
+    meta: { title: 'main主页', icon: ''},
+    redirect: '/main/test2',
+    children: [
       {
         path: 'test2',
-        name: 'Test',
-        component: () => import('@/views/test/index.vue'),
-        meta: { title: 'test页面2', icon: ''},
-        redirect: ''
+        name: 'Test2',
+        component: () => import('@/views/test2/index.vue'),
+        meta: { title: 'main的test2页面', icon: ''},
       },
-      {
-        path: 'test3',
-        name: 'Test',
-        component: () => import('@/views/test/index.vue'),
-        meta: { title: 'test页面3', icon: ''},
-        redirect: ''
-      }
     ]
   }
 ]
@@ -56,5 +55,3 @@ const router = createRouter({
 })
 
 export default router
-
-export { routes }

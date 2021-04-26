@@ -53,7 +53,6 @@ import { useStore } from 'vuex'
 import { UserOutlined, LockOutlined } from '@ant-design/icons-vue'
 import { notification } from 'ant-design-vue';
 import { title } from '@/utils/setting'
-import { routes } from '@/router'
 
 type Form = {
     username: string,

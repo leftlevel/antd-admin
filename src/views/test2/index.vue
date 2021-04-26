@@ -1,6 +1,6 @@
 <template>
   <div>
-    这是 dashboard
+    这是main下的 test2页面
   </div>
 </template>
 

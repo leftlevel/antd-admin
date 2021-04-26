@@ -1,6 +1,6 @@
 <template>
   <div>
-    test
+    这是 test 的第一个页面
   </div>
 </template>
 
