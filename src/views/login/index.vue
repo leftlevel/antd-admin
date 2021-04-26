@@ -76,8 +76,19 @@ export default defineComponent({
 
     const thisTime = computed(() => store.getters.thisTime)
 
-    const handleSubmit = (): void => {
+    // TODO: 需要封装到 permisstion 中
+    // const setRoutes = async () => {
+    //   let accessRoutes = await store.dispatch('setRoutes')
+    //   accessRoutes.forEach((item: any) => {
+    //     router.addRoute(item)
+    //   })
+    // }
+
+    const handleSubmit = async () => {
       console.log(form.username, form.password)
+      // await setRoutes()
+      // console.log(router.getRoutes())
+
       notification.open({
         message: '欢迎登录 antd-admin',
         description: thisTime.value,

@@ -1,24 +1,23 @@
 <template>
-  <a-sub-menu v-if="title" :key="path">
-    <template #title>
-      <span>
-        <user-outlined />
-        <span>{{ title }}</span>
-      </span>
+  <component
+    :is="menuComponent"
+    v-if="!item.hidden"
+    :item="item"
+    :route-children="routeChildren"
+  >
+    <template v-if="item.children && item.children.length">
+      <web-menu
+        v-for="route in item.children"
+        :key="route.path"
+        :item="route"
+      >
+      </web-menu>
     </template>
-
-    <template v-if="item.children">
-      <a-menu-item v-for="childrenRoute in item.children" :key="childrenRoute.path">
-        <user-outlined />
-        <span>{{ childrenRoute.meta.title }}</span>
-      </a-menu-item>
-    </template>
-  </a-sub-menu>
+  </component>
 </template>
 
 <script lang='ts'>
-import { UserOutlined } from '@ant-design/icons-vue'
-import { defineComponent, reactive, ref, toRefs } from 'vue'
+import { defineComponent, reactive, ref } from 'vue'
 import MenuItem from './components/MenuItem.vue'
 import Submenu from './components/Submenu.vue'
 
@@ -26,8 +25,7 @@ export default defineComponent({
   name: 'WebMenu',
   components: {
     MenuItem,
-    Submenu,
-    UserOutlined
+    Submenu
   },
 
   props: {
@@ -38,25 +36,32 @@ export default defineComponent({
   },
 
   setup(props) {
-    const { path, children } = toRefs(props.item)
+    const routeChildren = ref({})
+    const menuComponent = ref<string>('')
 
-    const title = ref<string>('')
-    // const childrenRoutes = ref([])
-
-    if (props.item.meta) {
-      title.value = props.item.meta.title
+    const handleChildren = (children = []) => {
+      if (children === null) {
+        return []
+      } else {
+        return children.filter((item: any) => item.hidden !== true)
+      }
     }
+    console.log('props.item', props.item)
 
-    // if (children) {
-    //   childrenRoutes.value = children
-    // }
-
-    console.log(path.value, children)
-
+    const showChildren = handleChildren(props.item.children)
+    if (showChildren.length === 0) {
+      menuComponent.value = 'MenuItem'
+      routeChildren.value = props.item
+    } else if (showChildren.length === 1 && props.item.alwaysShow !== true) {
+      menuComponent.value = 'MenuItem'
+      routeChildren.value = showChildren[0]
+    } else {
+      menuComponent.value = 'Submenu'
+    }
+    
     return {
-      title,
-      path
-      // childrenRoutes
+      routeChildren,
+      menuComponent
     }
   }
 })

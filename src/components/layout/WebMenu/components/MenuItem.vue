@@ -1,8 +1,8 @@
 <template>
   <a-menu-item :key="routeChildren.path" @click.capture="handleLink">
-    <span class="anticon">
+    <!-- <span class="anticon">
       <i :class="'ri-' + icon" aria-hidden="true"></i>
-    </span>
+    </span> -->
     <span>{{ routeChildren.meta.title }}</span>
   </a-menu-item>
 </template>

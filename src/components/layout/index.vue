@@ -80,19 +80,14 @@ export default defineComponent({
     const selectedKeys = ref<string[]>([])
     const openKeys = ref<string[]>([])
     const width = ref<number>(0)
-    const routes = ref<Object[]>([])
-    
-    routes.value = router.options.routes
-    // console.log('routes', routes)
 
     onBeforeMount(() => {
       window.addEventListener('resize', handleLayouts)
     })
-
     onMounted(() => {
       handleLayouts
+      console.log(routes.value)
     })
-
     onBeforeUnmount(() => {
       window.removeEventListener('resize', handleLayouts)
     })
@@ -100,6 +95,9 @@ export default defineComponent({
 
     const collapse = computed(() => store.state.moduleSetting.collapse)
     const device = computed(() => store.state.moduleSetting.device)
+    
+    const routes = computed(() => store.state.moduleRoutes.routes)
+
     const classObj = computed(() => {
       return {
         'web-mobile': device,
@@ -121,7 +119,6 @@ export default defineComponent({
         width.value = bcrWidth
       }
     }
-
     // 切换路由回调
     const handleRoute = () => {
         console.log(111)
@@ -132,7 +129,7 @@ export default defineComponent({
       // console.log(path, matched)
       matched[0].children.length > 1 ? (selectedKeys.value = [path]) : (selectedKeys.value = [matched[0].path])
       openKeys.value = [matched[0].path]
-    }, { immediate: true, deep: true })
+    }, { immediate: true })
 
     // console.log(selectedKeys.value, openKeys.value)
     return {

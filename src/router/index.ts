@@ -1,27 +1,38 @@
 import { createRouter, createWebHistory, RouteRecordRaw, createWebHashHistory } from 'vue-router'
-const routes: Array<RouteRecordRaw> = [
+
+export const constantRoutes: Array<any> = [
   {
     path: '/login',
-    name: 'Login',
-    component: () => import('@/views/login/index.vue')
-  },
+    component: () => import('@/views/login/index.vue'),
+    hidden: true,
+  }
+]
+
+export const asyncRoutes = [
   {
     path: '/',
     component: () => import('@/components/layout/index.vue'),
     redirect: '/dashboard',
-    children: [{
-      path: '/dashboard',
-      name: 'Dashboard',
+    meta: {
+      title: '首页',
+      icon: '',
+      affix: true
+    },
+    children: [
+      {
+        path: '/dashboard',
+        name: 'Dashboard',
       component: () => import('@/views/dashboard/index.vue'),
       meta: { title: '首页', icon: '', affix: true },
-    }]
+      }
+    ]
   },
   {
     path: '/blog',
     component: () => import('@/components/layout/index.vue'),
-    name: 'Blog',
-    meta: { title: '博客', icon: ''},
     redirect: '/blog/test',
+    alwaysShow: true,
+    meta: { title: '博客', icon: ''},
     children: [
       {
         path: 'test',
@@ -34,9 +45,9 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/main',
     component: () => import('@/components/layout/index.vue'),
-    name: 'Main',
-    meta: { title: 'main主页', icon: ''},
     redirect: '/main/test2',
+    alwaysShow: true,
+    meta: { title: 'main主页', icon: ''},
     children: [
       {
         path: 'test2',
@@ -51,7 +62,7 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
 //   history: createWebHistory(process.env.BASE_URL),
   history: createWebHashHistory(),
-  routes
+  routes: constantRoutes
 })
 
 export default router

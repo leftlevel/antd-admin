@@ -1,9 +1,10 @@
 <template>
   <a-sub-menu :key="item.fullPath">
     <template v-slot:title>
-      <span class="anticon">
+      <!-- <span class="anticon">
         <i :class="'ri-' + icon" aria-hidden="true"></i>
-      </span>
+      </span> -->
+      <span>{{ item.meta.title }}</span>
     </template>
     <slot></slot>
   </a-sub-menu>
