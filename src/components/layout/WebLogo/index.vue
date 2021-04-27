@@ -9,7 +9,7 @@
 <script lang='ts'>
 import { defineComponent, computed, Ref } from 'vue'
 import { useStore } from 'vuex'
-import { title } from '@/utils/setting'
+import { title, logo } from '@/utils/setting'
 import WebIcon from '@/components/layout/WebIcon/index.vue'
 
 export default defineComponent({
@@ -24,7 +24,7 @@ export default defineComponent({
     
     return {
       title,
-      logo: 'vuejs-line',
+      logo,
       collapse
     }
   }
