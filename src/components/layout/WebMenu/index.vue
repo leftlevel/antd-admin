@@ -17,7 +17,7 @@
 </template>
 
 <script lang='ts'>
-import { defineComponent, reactive, ref } from 'vue'
+import { defineComponent, reactive, ref, Ref } from 'vue'
 import MenuItem from './components/MenuItem.vue'
 import Submenu from './components/Submenu.vue'
 
@@ -36,8 +36,8 @@ export default defineComponent({
   },
 
   setup(props) {
-    const routeChildren = ref({})
-    const menuComponent = ref<string>('')
+    const routeChildren: Ref = ref({})
+    const menuComponent: Ref = ref<string>('')
 
     const handleChildren = (children = []) => {
       if (children === null) {
@@ -48,7 +48,7 @@ export default defineComponent({
     }
     console.log('props.item', props.item)
 
-    const showChildren = handleChildren(props.item.children)
+    const showChildren: Array<{}> = handleChildren(props.item.children)
     if (showChildren.length === 0) {
       menuComponent.value = 'MenuItem'
       routeChildren.value = props.item

@@ -8,14 +8,14 @@ export const constantRoutes: Array<any> = [
   }
 ]
 
-export const asyncRoutes = [
+export const asyncRoutes: Array<any> = [
   {
     path: '/',
     component: () => import('@/components/layout/index.vue'),
     redirect: '/dashboard',
     meta: {
       title: '首页',
-      icon: '',
+      icon: 'home-4-line',
       affix: true
     },
     children: [
@@ -23,37 +23,43 @@ export const asyncRoutes = [
         path: '/dashboard',
         name: 'Dashboard',
       component: () => import('@/views/dashboard/index.vue'),
-      meta: { title: '首页', icon: '', affix: true },
+      meta: { title: '首页', icon: 'home-4-line', affix: true },
       }
     ]
   },
   {
-    path: '/blog',
+    path: '/webComponent',
     component: () => import('@/components/layout/index.vue'),
-    redirect: '/blog/test',
+    redirect: '/webComponent/test',
     alwaysShow: true,
-    meta: { title: '博客', icon: ''},
+    meta: { title: '组件', icon: 'apps-line'},
     children: [
       {
-        path: 'test',
-        name: 'Test',
-        component: () => import('@/views/test/index.vue'),
-        meta: { title: 'test页面', icon: ''},
+        path: 'table',
+        name: 'Table',
+        component: () => import('@/views/webComponent/table/index.vue'),
+        meta: { title: '表格', icon: 'table-2'},
+      },
+      {
+        path: 'icon',
+        name: 'Icon',
+        component: () => import('@/views/webComponent/icon/index.vue'),
+        meta: { title: '图标', icon: 'remixicon-line'},
       }
     ]
   },
   {
-    path: '/main',
+    path: '/error',
     component: () => import('@/components/layout/index.vue'),
-    redirect: '/main/test2',
+    redirect: '/error/404',
     alwaysShow: true,
-    meta: { title: 'main主页', icon: ''},
+    meta: { title: '错误页', icon: 'bug-line'},
     children: [
       {
-        path: 'test2',
-        name: 'Test2',
-        component: () => import('@/views/test2/index.vue'),
-        meta: { title: 'main的test2页面', icon: ''},
+        path: '404',
+        name: 'Error404',
+        component: () => import('@/views/404.vue'),
+        meta: { title: '404', icon: 'pages-line'},
       },
     ]
   }

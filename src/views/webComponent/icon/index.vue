@@ -1,13 +1,13 @@
 <template>
   <div>
-    这是 test 的第一个页面
+    Icon页面
   </div>
 </template>
 
 <script lang='ts'>
 import { defineComponent } from 'vue'
 export default defineComponent({
-  name: '',
+  name: 'Icon',
   components: {
   },
 

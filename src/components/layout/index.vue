@@ -13,7 +13,6 @@
         mode="inline"
         v-model:selectedKeys="selectedKeys"
         v-model:openKeys="openKeys"
-        @click="handleRoute"
       >
         <web-menu v-for="route in routes" :key="route.path" :item="route" />
       </a-menu>
@@ -57,7 +56,7 @@ import {
 } from '@ant-design/icons-vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-import { defineComponent, ref, watch, computed,onBeforeMount, onBeforeUnmount, onMounted, reactive } from 'vue'
+import { defineComponent, ref, watch, computed, onBeforeMount, onBeforeUnmount, onMounted, Ref } from 'vue'
 import WebLogo from '@/components/layout/WebLogo/index.vue'
 import WebMenu from '@/components/layout/WebMenu/index.vue'
 
@@ -93,35 +92,30 @@ export default defineComponent({
     })
 
 
-    const collapse = computed(() => store.state.moduleSetting.collapse)
-    const device = computed(() => store.state.moduleSetting.device)
-    
-    const routes = computed(() => store.state.moduleRoutes.routes)
-
-    const classObj = computed(() => {
+    const collapse: Ref = computed(() => store.state.moduleSetting.collapse)
+    const device: Ref = computed(() => store.state.moduleSetting.device)
+    const routes: Ref = computed(() => store.state.moduleRoutes.routes)
+    const classObj: Ref = computed(() => {
       return {
         'web-mobile': device,
         'web-collapse': collapse
       }
     })
 
-    const toggleCollapse = () => {
+    // 伸缩菜单
+    const toggleCollapse = (): void => {
       store.commit('toggleCollapse', !collapse.value)
     }
 
     // 切换布局
-    const handleLayouts = () => {
-      const bcrWidth = document.body.getBoundingClientRect().width
+    const handleLayouts = (): void => {
+      const bcrWidth: number = document.body.getBoundingClientRect().width
       if (width.value !== bcrWidth) {
-        const isMobile = bcrWidth - 1 < 992
+        const isMobile: boolean = bcrWidth - 1 < 992
         if (isMobile) store.dispatch('toggleDevice', 'mobile')
         else store.dispatch('toggleDevice', 'desktop')
         width.value = bcrWidth
       }
-    }
-    // 切换路由回调
-    const handleRoute = () => {
-        console.log(111)
     }
 
     // 监听路由对象设置当前选中的菜单项 key 值
@@ -140,7 +134,6 @@ export default defineComponent({
       device,
       toggleCollapse,
       classObj,
-      handleRoute
     }
   },
 })

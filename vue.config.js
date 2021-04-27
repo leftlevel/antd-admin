@@ -1,10 +1,14 @@
+const WebpackBar = require('webpackbar')
+
 module.exports = {
     devServer: {
         port: 9091,
         open: true,
-        host: "localhost", //Network设置
+        //Network设置
+        host: "localhost",
         https: false,
-        proxy: {    //开发环境代理配置
+        //开发环境代理配置
+        proxy: {
             [process.env.VUE_APP_API_BASE_URL]: {
                 target: process.env.VUE_APP_API_SERVICE_URL,
                 changeOrigin: true,
@@ -17,21 +21,19 @@ module.exports = {
     lintOnSave: false,
     productionSourceMap: false, //打包不生成.map文件，加快打包速度
 
-    // css: {
-    //   requireModuleExtension: true,
-    //   sourceMap: true,
-    //   loaderOptions: {
-    //     less: {
-    //       lessOptions: {
-    //         javascriptEnabled: true,
-    //         modifyVars: {
-    //           'web-color-blue': '#1890ff',
-    //           'web-margin': '20px',
-    //           'web-padding': '20px',
-    //           'web-header-height': '65px',
-    //         },
-    //       },
-    //     },
-    //   },
-    // },
+    configureWebpack: () => {
+      if (process.env.NODE_ENV === 'production') {
+        // 生产环境配置
+      } else {
+        // 开发环境配置
+      }
+      return {
+        plugins: [
+          new WebpackBar({
+            name: 'antd-admin',
+            color: 'skyblue'
+          })
+        ]
+      }
+    }
 }

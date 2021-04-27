@@ -1,9 +1,9 @@
 <template>
   <a-sub-menu :key="item.fullPath">
     <template v-slot:title>
-      <!-- <span class="anticon">
-        <i :class="'ri-' + icon" aria-hidden="true"></i>
-      </span> -->
+      <span class="anticon">
+        <web-icon :icon="icon" />
+      </span>
       <span>{{ item.meta.title }}</span>
     </template>
     <slot></slot>
@@ -12,11 +12,12 @@
 
 <script lang='ts'>
 import { defineComponent } from 'vue'
-import 'remixicon/fonts/remixicon.css'
+import WebIcon from '@/components/layout/WebIcon/index.vue'
 
 export default defineComponent({
-  name: '',
+  name: 'Submenu',
   components: {
+    WebIcon,
   },
   props: {
     item: {
@@ -37,10 +38,3 @@ export default defineComponent({
   }
 })
 </script>
-
-<style lang="less" scoped>
-[class*='ri'] {
-  font-size: 16px;
-  vertical-align: -1px;
-}
-</style>

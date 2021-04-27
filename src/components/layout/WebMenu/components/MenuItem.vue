@@ -1,8 +1,8 @@
 <template>
   <a-menu-item :key="routeChildren.path" @click.capture="handleLink">
-    <!-- <span class="anticon">
-      <i :class="'ri-' + icon" aria-hidden="true"></i>
-    </span> -->
+    <span class="anticon">
+      <web-icon :icon="icon" />
+    </span>
     <span>{{ routeChildren.meta.title }}</span>
   </a-menu-item>
 </template>
@@ -11,11 +11,12 @@
 import { defineComponent } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { isExternal } from '@/utils/validate'
-import 'remixicon/fonts/remixicon.css'
+import WebIcon from '@/components/layout/WebIcon/index.vue'
 
 export default defineComponent({
-  name: '',
+  name: 'MenuItem',
   components: {
+    WebIcon
   },
   props: {
     item: {
@@ -52,10 +53,3 @@ export default defineComponent({
   }
 })
 </script>
-
-<style lang="less" scoped>
-[class*='ri'] {
-  font-size: 16px;
-  vertical-align: -1px;
-}
-</style>

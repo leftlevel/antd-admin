@@ -1,23 +1,31 @@
 <template>
   <div class="web-logo">
-    <img :src="logo" alt="">
-    <span>{{ title }}</span>
+    <web-icon v-if="logo" :icon="logo" />
+    <span class="anticon"></span>
+    <span v-if="!collapse">{{ title }}</span>
   </div>
 </template>
 
 <script lang='ts'>
-import { defineComponent } from 'vue'
+import { defineComponent, computed, Ref } from 'vue'
+import { useStore } from 'vuex'
 import { title } from '@/utils/setting'
+import WebIcon from '@/components/layout/WebIcon/index.vue'
+
 export default defineComponent({
   name: 'WebLogo',
   components: {
+    WebIcon
   },
 
   setup() {
+    const store = useStore()
+    const collapse: Ref = computed(() => store.state.moduleSetting.collapse)
     
     return {
       title,
-      logo: require('../../../assets/logo.png')
+      logo: 'vuejs-line',
+      collapse
     }
   }
 })
@@ -26,18 +34,14 @@ export default defineComponent({
 <style lang="less" scoped>
 .web-logo {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 32px;
-  margin: 16px 5px;
-  overflow: hidden;
-  font-size: 15px;
-  color: #fff;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  img {
-    width: 23px;
-    height: 23px;
-  }
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    margin: 16px 5px;
+    overflow: hidden;
+    font-size: 15px;
+    color: #fff;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 </style>
