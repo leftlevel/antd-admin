@@ -1,7 +1,7 @@
 <template>
   <div>
     这是 dashboard
-    <a-button type="primary" @click="test">Primary</a-button>
+    <!-- <a-button type="primary" @click="test">Primary</a-button> -->
   </div>
 </template>
 

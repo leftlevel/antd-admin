@@ -48,10 +48,9 @@
 const { dependencies } = require('../../../package.json')
 
 import { useRouter } from 'vue-router'
-import { defineComponent, ref, reactive, computed } from 'vue'
+import { defineComponent, reactive } from 'vue'
 import { useStore } from 'vuex'
 import { UserOutlined, LockOutlined } from '@ant-design/icons-vue'
-import { notification } from 'ant-design-vue';
 import { title } from '@/utils/setting'
 
 type Form = {
@@ -67,33 +66,23 @@ export default defineComponent({
   },
 
   setup() {
+    // hooks
     const form = reactive<Form>({
       username: 'admin',
       password: '123'
     })
+    // data
     const router = useRouter()
     const store = useStore()
 
-    const thisTime = computed(() => store.getters.thisTime)
-
-    // TODO: 需要封装到 permisstion 中
-    // const setRoutes = async () => {
-    //   let accessRoutes = await store.dispatch('setRoutes')
-    //   accessRoutes.forEach((item: any) => {
-    //     router.addRoute(item)
-    //   })
-    // }
+    // method
+    const login = (data: Object) => {
+      store.dispatch('login', data)
+    }
 
     const handleSubmit = async () => {
-      console.log(form.username, form.password)
-      // await setRoutes()
-      // console.log(router.getRoutes())
-
-      notification.open({
-        message: '欢迎登录 antd-admin',
-        description: thisTime.value,
-      })
-      router.push('/')
+      await login(form)
+      await router.push('/')
     }
     
     return {
