@@ -46,7 +46,7 @@
 
 <script lang='ts'>
 import { DownOutlined } from '@ant-design/icons-vue'
-import { defineComponent, Ref, ref, computed, onMounted, onBeforeMount, watch } from 'vue'
+import { defineComponent, Ref, ref, computed, onBeforeMount, watch } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
 

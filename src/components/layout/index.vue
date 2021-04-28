@@ -45,22 +45,12 @@
       <!-- 标签页 -->
       <web-tabs />
       <!-- 内容 -->
-      <a-layout-content
-        :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }"
-      >
-        <router-view></router-view>
-      </a-layout-content>
+      <web-content />
     </a-layout>
   </a-layout>
 </template>
 <script lang="ts">
-import {
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-} from '@ant-design/icons-vue'
+import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { defineComponent, ref, watch, computed, onBeforeMount, onBeforeUnmount, onMounted, Ref } from 'vue'
@@ -68,18 +58,17 @@ import WebLogo from '@/components/layout/WebLogo/index.vue'
 import WebMenu from '@/components/layout/WebMenu/index.vue'
 import WebAvatar from '@/components/layout/WebAvatar/index.vue'
 import WebTabs from '@/components/layout/WebTabs/index.vue'
+import WebContent from '@/components/layout/WebContent/index.vue'
 
 export default defineComponent({
   components: {
-    UserOutlined,
-    VideoCameraOutlined,
-    UploadOutlined,
     MenuUnfoldOutlined,
     MenuFoldOutlined,
     WebLogo,
     WebMenu,
     WebAvatar,
-    WebTabs
+    WebTabs,
+    WebContent
   },
 
   setup() {
