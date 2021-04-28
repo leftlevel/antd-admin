@@ -1,12 +1,15 @@
 <template>
   <a-layout class="web-layout-wrap">
+    <!-- 左侧 -->
     <a-layout-sider 
       class="web-layout-sider"
       v-model:collapsed="collapse"
       :trigger="null"
       collapsible
     >
+      <!-- 菜单 logo -->
       <web-logo />
+      <!-- 侧边菜单 -->
       <a-menu
         class="web-menu"
         theme="dark"
@@ -18,6 +21,7 @@
       </a-menu>
     </a-layout-sider>
     <a-layout>
+      <!-- 头部 -->
       <a-layout-header class="web-header">
         <a-row>
           <a-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
@@ -33,11 +37,14 @@
             />
           </a-col>
           <a-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
-            <!-- <vab-avatar /> -->
-            123
+            <!-- 用户头像及菜单 -->
+            <web-avatar />
           </a-col>
         </a-row>
       </a-layout-header>
+      <!-- 标签页 -->
+      <web-tabs />
+      <!-- 内容 -->
       <a-layout-content
         :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }"
       >
@@ -59,6 +66,8 @@ import { useStore } from 'vuex'
 import { defineComponent, ref, watch, computed, onBeforeMount, onBeforeUnmount, onMounted, Ref } from 'vue'
 import WebLogo from '@/components/layout/WebLogo/index.vue'
 import WebMenu from '@/components/layout/WebMenu/index.vue'
+import WebAvatar from '@/components/layout/WebAvatar/index.vue'
+import WebTabs from '@/components/layout/WebTabs/index.vue'
 
 export default defineComponent({
   components: {
@@ -68,18 +77,23 @@ export default defineComponent({
     MenuUnfoldOutlined,
     MenuFoldOutlined,
     WebLogo,
-    WebMenu
+    WebMenu,
+    WebAvatar,
+    WebTabs
   },
 
   setup() {
+    // hooks
     const route = useRoute()
     const router = useRouter()
     const store = useStore()
 
+    // data
     const selectedKeys = ref<string[]>([])
     const openKeys = ref<string[]>([])
     const width = ref<number>(0)
 
+    // lifehooks
     onBeforeMount(() => {
       window.addEventListener('resize', handleLayouts)
     })
@@ -91,7 +105,7 @@ export default defineComponent({
       window.removeEventListener('resize', handleLayouts)
     })
 
-
+    // computed
     const collapse: Ref = computed(() => store.state.moduleSetting.collapse)
     const device: Ref = computed(() => store.state.moduleSetting.device)
     const routes: Ref = computed(() => store.state.moduleRoutes.routes)
@@ -106,7 +120,6 @@ export default defineComponent({
     const toggleCollapse = (): void => {
       store.commit('toggleCollapse', !collapse.value)
     }
-
     // 切换布局
     const handleLayouts = (): void => {
       const bcrWidth: number = document.body.getBoundingClientRect().width
@@ -138,6 +151,7 @@ export default defineComponent({
   },
 })
 </script>
+
 <style lang="less">
 #components-layout-demo-custom-trigger .trigger {
   font-size: 18px;

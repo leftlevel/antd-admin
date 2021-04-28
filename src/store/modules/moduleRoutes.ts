@@ -13,12 +13,23 @@ export default {
   },
 
   mutations: {
+    /**
+     * @description: 设置路由
+     * @param {any} state
+     * @param {any} routes
+     * @return {*}
+     */
     setRoutes(state: any, routes: any) {
       state.routes = routes
     }
   },
 
   actions: {
+    /**
+     * @description: 设置路由
+     * @param {any} { commit }
+     * @return {*}
+     */
     async setRoutes({ commit }: any) {
       const finallyRoutes = filterRoutes([...constantRoutes, ...asyncRoutes])
       commit('setRoutes', finallyRoutes)
