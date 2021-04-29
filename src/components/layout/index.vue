@@ -88,7 +88,6 @@ export default defineComponent({
     })
     onMounted(() => {
       handleLayouts
-      console.log(routes.value)
     })
     onBeforeUnmount(() => {
       window.removeEventListener('resize', handleLayouts)
