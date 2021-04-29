@@ -46,7 +46,7 @@ export default defineComponent({
         return children.filter((item: any) => item.hidden !== true)
       }
     }
-    console.log('props.item', props.item)
+    // console.log('props.item', props.item)
 
     const showChildren: Array<{}> = handleChildren(props.item.children)
     if (showChildren.length === 0) {

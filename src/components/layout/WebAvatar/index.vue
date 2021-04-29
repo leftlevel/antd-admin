@@ -18,7 +18,9 @@
 <script lang='ts'>
 import { defineComponent, computed } from 'vue'
 import { useStore } from 'vuex'
+import { useRoute, useRouter } from 'vue-router'
 import { DownOutlined } from '@ant-design/icons-vue'
+import { recordRoute } from '@/utils/setting'
 
 export default defineComponent({
   name: 'WebAvatar',
@@ -28,10 +30,20 @@ export default defineComponent({
 
   setup() {
 
+    // hooks
     const store = useStore()
+    const $route = useRoute()
+    const $router = useRouter()
 
+    // method
     const logout = async () => {
-      // await this
+      await store.dispatch('logout')
+      if (recordRoute) {
+        const fullPath = $route.fullPath
+        $router.push(`/login?redirect=${fullPath}`)
+      } else {
+        $router.push('/login')
+      }
     }
 
     const avatar = computed(() => store.state.moduleUser.avatar)

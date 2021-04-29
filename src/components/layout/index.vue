@@ -97,7 +97,7 @@ export default defineComponent({
     // computed
     const collapse: Ref = computed(() => store.state.moduleSetting.collapse)
     const device: Ref = computed(() => store.state.moduleSetting.device)
-    const routes: Ref = computed(() => store.state.moduleRoutes.routes)
+    const routes: Ref = computed(() => store.getters.routes)
     const classObj: Ref = computed(() => {
       return {
         'web-mobile': device,

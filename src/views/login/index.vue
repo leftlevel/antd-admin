@@ -76,8 +76,8 @@ export default defineComponent({
     const store = useStore()
 
     // method
-    const login = (data: Object) => {
-      store.dispatch('login', data)
+    const login = async (data: Object) => {
+      await store.dispatch('login', data)
     }
 
     const handleSubmit = async () => {

@@ -1,5 +1,7 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios'
+import store from '@/store'
 import { message } from 'ant-design-vue'
+import { tokenName } from './setting'
 
 const request = axios.create({
   baseURL: process.env.VUE_APP_API_BASE_URL || '', // url = base url + request url
@@ -28,13 +30,16 @@ const err = (error: any) => {
 }
 
 request.interceptors.request.use((config: AxiosRequestConfig) => {
+  if (store.getters['user/accessToken']) {
+    config.headers[tokenName] = store.getters['accessToken']
+  }
   return config
 }, err)
 
 request.interceptors.response.use((response: AxiosResponse) => {
   const res = response.data
   if (res.code != 20000) {
-    message.error(res.message || 'Error', 3 * 1000)
+    message.error(res.message || 'Error')
   }
   if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
     return Promise.reject(new Error(res.message || 'Error'))
