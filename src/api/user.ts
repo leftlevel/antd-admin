@@ -2,9 +2,9 @@ import request from '@/utils/request'
 
 type Data = {}
 
-export function getVersion() {
+export function getTest() {
   return request({
-    url: '/version',
+    url: '/test',
     method: 'get',
   })
 }

@@ -4,6 +4,7 @@ export default {
   state: {
     collapse: false,
     device: 'desktop',
+    loading: false
   },
 
   getters: {
@@ -28,6 +29,15 @@ export default {
      */
     toggleDevice(state: any, data: string): void {
       state.device = data
+    },
+    /**
+     * @description: 是否开启加载中组件
+     * @param {any} state
+     * @param {boolean} load
+     * @return {*}
+     */
+    showLoading(state: any, load: boolean): void {
+      state.loading = load
     }
   },
 
@@ -40,6 +50,15 @@ export default {
      */
     toggleDevice({ commit }: any, data: string): void {
       commit('toggleDevice', data)
+    },
+    /**
+     * @description: 是否开启加载中组件
+     * @param {any} param1
+     * @param {boolean} load
+     * @return {*}
+     */
+    showLoading({ commit }: any, load: boolean): void {
+      commit('showLoading', load)
     }
   }
 }

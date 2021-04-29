@@ -1,13 +1,14 @@
 <template>
   <div>
     这是 dashboard
-    <!-- <a-button type="primary" @click="test">Primary</a-button> -->
+    <a-button type="primary" @click="test">Primary</a-button>
   </div>
 </template>
 
 <script lang='ts'>
 import { defineComponent } from 'vue'
-import { getVersion } from '@/api/user'
+import { useRouter } from 'vue-router'
+import { getTest } from '@/api/user'
 
 export default defineComponent({
   name: '',
@@ -15,8 +16,11 @@ export default defineComponent({
   },
 
   setup() {
+    const $router = useRouter()
+
     const test = () => {
-      getVersion().then(res => {
+      // $router.push('/webComponent/table')
+      getTest().then(res => {
         console.log(res)
       })
     }

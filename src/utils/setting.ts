@@ -20,3 +20,10 @@ export const loginInterception: boolean = true
 export const authentication: string = 'intelligence'
 // 不经过 token 校验的路由
 export const routesWhiteList: string[] = ['/login', '/register', '/callback', '404']
+
+// 后端数据接受方式 application/json;charset=UTF-8 或 application/x-www-form-urlencoded;charset=UTF-8
+export const contentType: string =  'application/json; charset=utf-8'
+// 消息框持续时间
+export const messageDuration: number =  2 * 1000
+// 最长请求时间
+export const requestTimeout: number =  10 * 1000

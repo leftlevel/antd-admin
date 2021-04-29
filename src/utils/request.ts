@@ -1,12 +1,18 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios'
 import store from '@/store'
+import qs from 'qs'
 import { message } from 'ant-design-vue'
-import { tokenName } from './setting'
+import {
+  tokenName,
+  contentType,
+  messageDuration,
+  requestTimeout
+} from './setting'
 
 const request = axios.create({
   baseURL: process.env.VUE_APP_API_BASE_URL || '', // url = base url + request url
-  timeout: 60 * 1000,
-  withCredentials: true
+  timeout: requestTimeout,
+  headers: { 'Content-Type': contentType }
 })
 
 const err = (error: any) => {
@@ -30,22 +36,25 @@ const err = (error: any) => {
 }
 
 request.interceptors.request.use((config: AxiosRequestConfig) => {
-  if (store.getters['user/accessToken']) {
+  if (store.getters['accessToken']) {
+    // 请求头携带 token
     config.headers[tokenName] = store.getters['accessToken']
   }
+  if (config.data && config.headers['Content-type'] === 'application/x-www-form-urlencoded;charset=UTF-8') {
+    config.data = qs.stringify(config.data)
+  }
+  store.dispatch('showLoading', true)
   return config
 }, err)
 
 request.interceptors.response.use((response: AxiosResponse) => {
   const res = response.data
+  store.dispatch('showLoading', false)
   if (res.code != 20000) {
     message.error(res.message || 'Error')
-  }
-  if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
     return Promise.reject(new Error(res.message || 'Error'))
-  } else {
-    return res
   }
+  return res
 }, err)
 
 export default request

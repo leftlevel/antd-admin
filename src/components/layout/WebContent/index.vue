@@ -1,24 +1,35 @@
 <template>
-  <a-layout-content class="web-content">
-    <router-view v-slot="{ Component }">
-      <transition mode="out-in" name="fade-transform">
-        <component :is="Component" />
-      </transition>
-    </router-view>
-  </a-layout-content>
+  <loading>
+    <template #loadingComponent>
+      <a-layout-content class="web-content">
+        <router-view v-slot="{ Component }">
+          <transition mode="out-in" name="fade-transform">
+            <component :is="Component" />
+          </transition>
+        </router-view>
+      </a-layout-content>
+    </template>
+  </loading>
 </template>
 
 <script lang='ts'>
-import { defineComponent } from 'vue'
+import { computed, defineComponent } from 'vue'
+import { useStore } from 'vuex'
+import Loading from '@/components/layout/Loding/index.vue'
 
 export default defineComponent({
   name: 'WebContent',
   components: {
+    Loading
   },
 
   setup() {
+    const $store = useStore()
+
+    const loading = computed(() => $store.state.moduleSetting.loading)
+
     return {
-      
+      loading
     }
   }
 })
