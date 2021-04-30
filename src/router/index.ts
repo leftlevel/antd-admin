@@ -5,6 +5,11 @@ export const constantRoutes: Array<any> = [
     path: '/login',
     component: () => import('@/views/login/index.vue'),
     hidden: true,
+  },
+  {
+    path: '/404',
+    component: () => import('@/views/404.vue'),
+    hidden: true
   }
 ]
 
