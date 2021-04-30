@@ -32,6 +32,7 @@ export default defineComponent({
   name: '404',
 
   setup() {
+    // data
     const errorInfo = reactive({
       jumpTime: 5,
       oops: '抱歉',
@@ -40,9 +41,9 @@ export default defineComponent({
       btn: '返回首页',
       timer: 0
     })
-
     const { timer, jumpTime } = toRefs(errorInfo)
 
+    // hooks
     const $router = useRouter()
     const $store = useStore()
     
@@ -53,6 +54,7 @@ export default defineComponent({
       clearInterval(timer.value)
     })
 
+    // method
     const timeChange = () => {
       errorInfo.timer = setInterval(() => {
         if (jumpTime.value) {
@@ -64,6 +66,7 @@ export default defineComponent({
         }
       }, 1000)
     }
+    
     return {
       ...toRefs(errorInfo)
     }
