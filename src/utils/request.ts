@@ -1,4 +1,4 @@
-import axios, { AxiosResponse, AxiosRequestConfig } from 'axios'
+import axios, { AxiosResponse, AxiosRequestConfig, AxiosPromise } from 'axios'
 import store from '@/store'
 import qs from 'qs'
 import { message } from 'ant-design-vue'
@@ -15,7 +15,7 @@ const request = axios.create({
   headers: { 'Content-Type': contentType }
 })
 
-const err = (error: any) => {
+const err = (error: any): AxiosPromise => {
   if (error.message.includes('timeout')) {
     message.error('请求超时，请刷新页面重试')
   }
@@ -35,7 +35,7 @@ const err = (error: any) => {
   return Promise.reject(error)
 }
 
-request.interceptors.request.use((config: AxiosRequestConfig) => {
+request.interceptors.request.use((config: AxiosRequestConfig): AxiosRequestConfig => {
   if (store.getters['accessToken']) {
     // 请求头携带 token
     config.headers[tokenName] = store.getters['accessToken']
@@ -47,7 +47,7 @@ request.interceptors.request.use((config: AxiosRequestConfig) => {
   return config
 }, err)
 
-request.interceptors.response.use((response: AxiosResponse) => {
+request.interceptors.response.use((response: AxiosResponse): AxiosResponse | AxiosPromise => {
   const res = response.data
   store.dispatch('showLoading', false)
   if (res.code != 20000) {

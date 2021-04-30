@@ -2,26 +2,30 @@ import { filterRoutes } from '@/utils/routes'
 import { constantRoutes, asyncRoutes } from '@/router'
 import router from "@/router"
 
+interface RouteState {
+  routes?: Array<Object>,
+}
+
 export default {
   namespace: true,
 
   state: {
     // routes: JSON.parse(sessionStorage.getItem('routes') as string)
-    routes: []
-  },
+    routes: [],
+  } as RouteState,
 
   getters: {
-    routes: (state: any) => state.routes
+    routes: (state: RouteState) => state.routes
   },
 
   mutations: {
     /**
      * @description: 设置路由
-     * @param {any} state
+     * @param {RouteState} state
      * @param {any} routes
      * @return {*}
      */
-    setRoutes(state: any, routes: any) {
+    setRoutes(state: RouteState, routes: any) {
       state.routes = routes
     }
   },

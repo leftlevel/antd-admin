@@ -1,3 +1,9 @@
+interface SettingState {
+  collapse: boolean,
+  device: string,
+  loading: boolean
+}
+
 export default {
   namespace: true,
   
@@ -5,38 +11,38 @@ export default {
     collapse: false,
     device: 'desktop',
     loading: false
-  },
+  } as SettingState,
 
   getters: {
-    device: (state: any) => state.device,
+    device: (state: SettingState) => state.device,
   },
 
   mutations: {
     /**
      * @description: 显示/隐藏菜单
-     * @param {any} state
+     * @param {SettingState} state
      * @param {boolean} data
      * @return {*}
      */
-    toggleCollapse(state: any, data: boolean): void {
+    toggleCollapse(state: SettingState, data: boolean): void {
       state.collapse = data
     },
     /**
      * @description: 切换设备
-     * @param {any} state
+     * @param {SettingState} state
      * @param {string} data
      * @return {*}
      */
-    toggleDevice(state: any, data: string): void {
+    toggleDevice(state: SettingState, data: string): void {
       state.device = data
     },
     /**
      * @description: 是否开启加载中组件
-     * @param {any} state
+     * @param {SettingState} state
      * @param {boolean} load
      * @return {*}
      */
-    showLoading(state: any, load: boolean): void {
+    showLoading(state: SettingState, load: boolean): void {
       state.loading = load
     }
   },

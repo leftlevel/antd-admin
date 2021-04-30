@@ -1,22 +1,26 @@
+interface TagesBarState {
+  visitedRoutes: Array<{ fullPath?: string }>
+}
+
 export default {
   namespace: true,
   
   state: {
     visitedRoutes: []
-  },
+  } as TagesBarState,
 
   getters: {
-    visitedRoutes: (state: any) => state.visitedRoutes
+    visitedRoutes: (state: TagesBarState) => state.visitedRoutes
   },
 
   mutations: {
     /**
      * @description: 添加标签页
-     * @param {any} state
+     * @param {TagesBarState} state
      * @param {any} route
      * @return {*}
      */
-    addVisitedRoute(state: any, route: any) {
+    addVisitedRoute(state: TagesBarState, route: any) {
       let target = state.visitedRoutes.find((item: any) => item.path === route.path)
       if (target) {
         if (route.fullPath !== target.fullPath) {
@@ -28,31 +32,31 @@ export default {
     },
     /**
      * @description: 删除当前标签页
-     * @param {any} state
+     * @param {TagesBarState} state
      * @param {any} route
      * @return {*}
      */
-    delVisitedRoute(state: any, route: any) {
+    delVisitedRoute(state: TagesBarState, route: any) {
       state.visitedRoutes.forEach((item: any, index: number) => {
         if (item.path === route.path) state.visitedRoutes.splice(index, 1)
       })
     },
     /**
      * @description: 删除当前标签以外其它全部多标签页
-     * @param {any} state
+     * @param {TagesBarState} state
      * @param {any} route
      * @return {*}
      */
-    delOthersVisitedRoutes(state: any, route: any) {
+    delOthersVisitedRoutes(state: TagesBarState, route: any) {
       state.visitedRoutes = state.visitedRoutes.filter((item: any) => item.meta.affix || item.path === route.path)
     },
     /**
      * @description: 删除当前标签页左边全部多标签页
-     * @param {any} state
+     * @param {TagesBarState} state
      * @param {any} route
      * @return {*}
      */
-    delLeftVisitedRoutes(state: any, route: any) {
+    delLeftVisitedRoutes(state: TagesBarState, route: any) {
       let index: number = state.visitedRoutes.length
       state.visitedRoutes = state.visitedRoutes.filter((item: any) => {
         if (item.name === route.name) {
@@ -63,11 +67,11 @@ export default {
     },
     /**
      * @description: 删除当前标签页右边全部多标签页
-     * @param {any} state
+     * @param {TagesBarState} state
      * @param {any} route
      * @return {*}
      */
-    delRightVisitedRoutes(state: any, route: any) {
+    delRightVisitedRoutes(state: TagesBarState, route: any) {
       let index: number = state.visitedRoutes.length
       state.visitedRoutes = state.visitedRoutes.filter((item: any) => {
         if (item.name === route.name) {
@@ -78,10 +82,10 @@ export default {
     },
     /**
      * @description: 删除全部多标签页
-     * @param {any} state
+     * @param {TagesBarState} state
      * @return {*}
      */
-    delAllVisitedRoutes(state: any) {
+    delAllVisitedRoutes(state: TagesBarState) {
       state.visitedRoutes = state.visitedRoutes.filter((item: any) => item.meta.affix)
     }
   },

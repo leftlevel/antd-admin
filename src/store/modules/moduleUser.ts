@@ -3,6 +3,12 @@ import { getAccessToken, removeAccessToken, setAccessToken } from '@/utils/acces
 import { title, tokenName } from '@/utils/setting'
 import { message, notification } from 'ant-design-vue'
 
+interface UserState {
+  accessToken: string,
+  avatar: string,
+  username: string
+}
+
 export default {
   namespace: true,
   
@@ -10,40 +16,40 @@ export default {
     accessToken: getAccessToken(),
     avatar: require('@/assets/avatar/admin.gif'),
     username: ''
-  },
+  } as UserState,
 
   getters: {
-    accessToken: (state: any) => state.accessToken,
-    avatar: (state: any) => state.avatar,
-    username: (state: any) => state.username
+    accessToken: (state: UserState) => state.accessToken,
+    avatar: (state: UserState) => state.avatar,
+    username: (state: UserState) => state.username
   },
 
   mutations: {
     /**
      * @description: 设置头像
-     * @param {any} state
+     * @param {UserState} state
      * @param {string} avatar
      * @return {*}
      */
-    setAvatar(state: any, avatar: string): void {
+    setAvatar(state: UserState, avatar: string): void {
       state.avatar = avatar
     },
     /**
      * @description: 设置用户名
-     * @param {any} state
+     * @param {UserState} state
      * @param {string} username
      * @return {*}
      */
-    setUsername(state: any, username: string): void {
+    setUsername(state: UserState, username: string): void {
       state.username = username
     },
     /**
      * @description: 设置 accessToken
-     * @param {any} state
+     * @param {UserState} state
      * @param {string} accessToken
      * @return {*}
      */
-    setAccessToken(state: any, accessToken: string) {
+    setAccessToken(state: UserState, accessToken: string) {
       state.accessToken = accessToken
       setAccessToken(accessToken)
     }

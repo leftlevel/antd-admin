@@ -55,7 +55,7 @@ export default defineComponent({
     })
 
     // method
-    const timeChange = () => {
+    const timeChange = (): void => {
       errorInfo.timer = setInterval(() => {
         if (jumpTime.value) {
           jumpTime.value--
