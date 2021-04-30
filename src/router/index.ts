@@ -8,6 +8,7 @@ export const constantRoutes: Array<any> = [
   },
   {
     path: '/404',
+    name: '404',
     component: () => import('@/views/404.vue'),
     hidden: true
   }
@@ -25,7 +26,7 @@ export const asyncRoutes: Array<any> = [
     },
     children: [
       {
-        path: '/dashboard',
+        path: 'dashboard',
         name: 'Dashboard',
       component: () => import('@/views/dashboard/index.vue'),
       meta: { title: '首页', icon: 'home-4-line', affix: true },
@@ -35,7 +36,7 @@ export const asyncRoutes: Array<any> = [
   {
     path: '/webComponent',
     component: () => import('@/components/layout/index.vue'),
-    redirect: '/webComponent/test',
+    redirect: '/webComponent/table',
     alwaysShow: true,
     meta: { title: '组件', icon: 'apps-line'},
     children: [
@@ -67,6 +68,11 @@ export const asyncRoutes: Array<any> = [
         meta: { title: '404', icon: 'pages-line'},
       },
     ]
+  },
+  {
+    path: '/*',
+    redirect: '/404',
+    hidden: true,
   }
 ]
 

@@ -73,9 +73,9 @@ export default defineComponent({
 
   setup() {
     // hooks
-    const route = useRoute()
-    const router = useRouter()
-    const store = useStore()
+    const $route = useRoute()
+    const $router = useRouter()
+    const $store = useStore()
 
     // data
     const selectedKeys = ref<string[]>([])
@@ -94,9 +94,9 @@ export default defineComponent({
     })
 
     // computed
-    const collapse: Ref = computed(() => store.state.moduleSetting.collapse)
-    const device: Ref = computed(() => store.state.moduleSetting.device)
-    const routes: Ref = computed(() => store.getters.routes)
+    const collapse: Ref = computed(() => $store.state.moduleSetting.collapse)
+    const device: Ref = computed(() => $store.state.moduleSetting.device)
+    const routes: Ref = computed(() => $store.getters.routes)
     const classObj: Ref = computed(() => {
       return {
         'web-mobile': device,
@@ -106,24 +106,28 @@ export default defineComponent({
 
     // 伸缩菜单
     const toggleCollapse = (): void => {
-      store.commit('toggleCollapse', !collapse.value)
+      $store.commit('toggleCollapse', !collapse.value)
     }
     // 切换布局
     const handleLayouts = (): void => {
       const bcrWidth: number = document.body.getBoundingClientRect().width
       if (width.value !== bcrWidth) {
         const isMobile: boolean = bcrWidth - 1 < 992
-        if (isMobile) store.dispatch('toggleDevice', 'mobile')
-        else store.dispatch('toggleDevice', 'desktop')
+        if (isMobile) $store.dispatch('toggleDevice', 'mobile')
+        else $store.dispatch('toggleDevice', 'desktop')
         width.value = bcrWidth
       }
     }
 
     // 监听路由对象设置当前选中的菜单项 key 值
-    watch(route, ({ path, matched }) => {
+    watch($route, ({ path, matched }) => {
       // console.log(path, matched)
-      matched[0].children.length > 1 ? (selectedKeys.value = [path]) : (selectedKeys.value = [matched[0].path])
-      openKeys.value = [matched[0].path]
+      if (matched[0]) {
+        matched[0].children.length > 1 ? (selectedKeys.value = [path]) : (selectedKeys.value = [matched[0].path])
+        openKeys.value = [matched[0].path]
+      }else {
+        $router.push('/404')
+      }
     }, { immediate: true })
 
     // console.log(selectedKeys.value, openKeys.value)
