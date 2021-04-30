@@ -102,7 +102,7 @@ export default defineComponent({
     background: url('../../assets/login_images/login_background.png');
     background-size: cover;
     &-form {
-      width: calc(100% - 40px);
+      width: 350px;
       height: 380px;
       padding: 4vh;
       margin-top: calc((100vh - 380px) / 2);
