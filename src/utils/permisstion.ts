@@ -13,15 +13,17 @@ router.beforeEach(async (to, from, next) => {
   if (hasToken) {
     if (to.path === '/login') {
       next({ path: '/' })
-    }
-    if (store.getters['routes'].length === 0) {
-      await store.dispatch('addRoutes').then(() => {
-        next({ path: to.path })
-      })
     } else {
-      await store.dispatch('addRoutes')
-      next()
+      if (store.getters['routes'].length === 0) {
+        await store.dispatch('addRoutes').then(() => {
+          next({ path: to.path })
+        })
+      } else {
+        await store.dispatch('addRoutes')
+        next()
+      }
     }
+    
   } else {
     if (routesWhiteList.indexOf(to.path) !== -1) {
       next()
