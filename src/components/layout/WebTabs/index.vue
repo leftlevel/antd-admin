@@ -64,7 +64,7 @@ export default defineComponent({
 
     // data
     const affixTabs: Ref = ref([])
-    const tabActive: Ref = ref(null)
+    const tabActive: Ref = ref()
 
     // computed
     const visitedRoutes = computed(() => store.getters.visitedRoutes)
@@ -184,7 +184,7 @@ export default defineComponent({
       toLastTag()
     }
     const toLastTag = () => {
-      const latestView = visitedRoutes.value.slice(-1)[0]
+      const latestView: string = visitedRoutes.value.slice(-1)[0]
       if (latestView) {
         $router.push(latestView)
       } else {
