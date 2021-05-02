@@ -15,11 +15,11 @@ router.beforeEach(async (to, from, next) => {
       next({ path: '/' })
     }
     if (store.getters['routes'].length === 0) {
-      store.dispatch('addRoutes').then(() => {
+      await store.dispatch('addRoutes').then(() => {
         next({ path: to.path })
       })
     } else {
-      store.dispatch('addRoutes')
+      await store.dispatch('addRoutes')
       next()
     }
   } else {
