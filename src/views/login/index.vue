@@ -76,7 +76,7 @@ export default defineComponent({
     const store = useStore()
 
     // method
-    const login = async (data: Object) => {
+    const login = async (data: Form) => {
       await store.dispatch('login', data)
     }
 
