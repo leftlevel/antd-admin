@@ -50,6 +50,10 @@ import { defineComponent, Ref, ref, computed, onBeforeMount, watch } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
 
+type Menu =  {
+  key?: string
+}
+
 export default defineComponent({
   name: 'WebTabs',
   components: {
@@ -58,17 +62,17 @@ export default defineComponent({
 
   setup() {
     // hooks
-    const store = useStore()
+    const $store = useStore()
     const $route = useRoute()
     const $router = useRouter()
 
     // data
     const affixTabs: Ref = ref([])
-    const tabActive: Ref = ref()
+    const tabActive: Ref = ref('')
 
     // computed
-    const visitedRoutes = computed(() => store.getters.visitedRoutes)
-    const routes = computed(() => store.getters.routes)
+    const visitedRoutes = computed(() => $store.getters.visitedRoutes)
+    const routes = computed(() => $store.getters.routes)
 
     // beforMount
     onBeforeMount(() => {
@@ -82,22 +86,22 @@ export default defineComponent({
 
     // method
     const addVisitedRoute = (route: any) => {
-      store.dispatch('addVisitedRoute', route)
+      $store.dispatch('addVisitedRoute', route)
     }
     const delVisitedRoute = (route: any) => {
-      store.dispatch('delVisitedRoute', route)
+      $store.dispatch('delVisitedRoute', route)
     }
     const delOthersVisitedRoutes = (route: any) => {
-      store.dispatch('delOthersVisitedRoutes', route)
+      $store.dispatch('delOthersVisitedRoutes', route)
     }
     const delLeftVisitedRoutes = (route: any) => {
-      store.dispatch('delLeftVisitedRoutes', route)
+      $store.dispatch('delLeftVisitedRoutes', route)
     }
     const delRightVisitedRoutes = (route: any) => {
-      store.dispatch('delRightVisitedRoutes', route)
+      $store.dispatch('delRightVisitedRoutes', route)
     }
     const delAllVisitedRoutes = () => {
-      store.dispatch('delAllVisitedRoutes')
+      $store.dispatch('delAllVisitedRoutes')
     }
 
     const initAffixTabs = (routes: Array<any>) => {
@@ -151,7 +155,7 @@ export default defineComponent({
         toLastTag()
       }
     }
-    const handleClick = ({ key }: any) => {
+    const handleClick = ({ key }: Menu) => {
       switch (key) {
         case 'closeOthersTabs':
           closeOthersTabs()
