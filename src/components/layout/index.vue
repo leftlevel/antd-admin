@@ -37,6 +37,18 @@
             />
           </a-col>
           <a-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
+            <a class="action-item" 
+              href="https://2x.antdv.com/components/overview/"
+              target="_balnk"
+            >
+              <AntDesignOutlined />
+            </a>
+            <a class="action-item" 
+              href="https://github.com/leftlevel/antd-admin"
+              target="_balnk"
+            >
+              <GithubOutlined />
+            </a>
             <!-- 用户头像及菜单 -->
             <web-avatar />
           </a-col>
@@ -50,7 +62,7 @@
   </a-layout>
 </template>
 <script lang="ts">
-import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue'
+import { MenuUnfoldOutlined, MenuFoldOutlined, GithubOutlined, AntDesignOutlined } from '@ant-design/icons-vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { defineComponent, ref, watch, computed, onBeforeMount, onBeforeUnmount, onMounted, Ref } from 'vue'
@@ -64,6 +76,8 @@ export default defineComponent({
   components: {
     MenuUnfoldOutlined,
     MenuFoldOutlined,
+    GithubOutlined,
+    AntDesignOutlined,
     WebLogo,
     WebMenu,
     WebAvatar,
@@ -193,6 +207,18 @@ export default defineComponent({
     transition: color 0.3s;
     &:hover {
       color: #1890ff;
+    }
+  }
+  .action-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 36px;
+    background: #fff;
+    font-size: 24px;
+    &:hover {
+      background-color: #F1F3F6;
     }
   }
 }
