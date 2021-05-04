@@ -8,7 +8,14 @@
       </span>
       <template #overlay>
         <a-menu>
-          <a-menu-item @click="logout">退出登录</a-menu-item>
+          <a-menu-item @click="handleSetting">
+            <SettingOutlined />
+            <span style="margin-left: 4px">设置</span>
+          </a-menu-item>
+          <a-menu-item @click="logout">
+            <LogoutOutlined />
+            <span style="margin-left: 4px">退出登录</span>
+          </a-menu-item>
         </a-menu>
       </template>
     </a-dropdown>
@@ -19,13 +26,15 @@
 import { defineComponent, computed } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
-import { DownOutlined } from '@ant-design/icons-vue'
+import { DownOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons-vue'
 import { recordRoute } from '@/utils/setting'
 
 export default defineComponent({
   name: 'WebAvatar',
   components: {
-    DownOutlined
+    DownOutlined,
+    LogoutOutlined,
+    SettingOutlined
   },
 
   setup() {
@@ -45,11 +54,15 @@ export default defineComponent({
         $router.push('/login')
       }
     }
+    const handleSetting = () => {
+      console.log('设置主题')
+    }
 
     const avatar = computed(() => store.state.moduleUser.avatar)
     
     return {
       logout,
+      handleSetting,
       avatar
     }
   }
@@ -58,6 +71,7 @@ export default defineComponent({
 
 <style lang="less">
 .web-avatar {
+  margin-left: 10px;
   .ant-dropdown-link {
     display: block;
     min-height: 64px;
