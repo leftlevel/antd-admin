@@ -2,6 +2,8 @@
   <div>
     这是 dashboard
     <a-button type="primary" @click="test">Primary</a-button>
+    <hr />
+    <a-month-picker placeholder="Select month" />
   </div>
 </template>
 
@@ -11,7 +13,7 @@ import { useRouter } from 'vue-router'
 import { getTest } from '@/api/user'
 
 export default defineComponent({
-  name: '',
+  name: 'DashBoard',
   components: {
   },
 
