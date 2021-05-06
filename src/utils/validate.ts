@@ -1,8 +1,7 @@
 /**
- * @author chuzhixin 1204505056@qq.com
- * @description 判读是否为外链
- * @param path
- * @returns {boolean}
+ * @description: 判断是否是外链
+ * @param {string} path
+ * @return {*}
  */
 export function isExternal(path: string): boolean {
   return /^(https?:|mailto:|tel:)/.test(path)
