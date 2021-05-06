@@ -6,6 +6,7 @@
       v-model:collapsed="collapse"
       :trigger="null"
       collapsible
+      :class="classObj"
     >
       <!-- 菜单 logo -->
       <web-logo />
@@ -20,7 +21,7 @@
         <web-menu v-for="route in routes" :key="route.path" :item="route" />
       </a-menu>
     </a-layout-sider>
-    <a-layout>
+    <a-layout class="web-layout">
       <!-- 头部 -->
       <a-layout-header class="web-header">
         <a-row>
@@ -113,8 +114,8 @@ export default defineComponent({
     const routes: Ref = computed(() => $store.getters.routes)
     const classObj: Ref = computed(() => {
       return {
-        'web-mobile': device,
-        'web-collapse': collapse
+        'web-mobile': device.value,
+        'web-collapse': collapse.value
       }
     })
 
@@ -182,11 +183,29 @@ export default defineComponent({
 }
 
 .web-layout-sider {
+  position: fixed;
   height: 100vh;
   left: 0;
   overflow: auto;
   .web-menu {
     height: calc(100hv - 65px);
+  }
+}
+
+.web-layout {
+  padding-left: 200px;
+  transition: all 0.2s;
+}
+.web-collapse {
+  .web-logo .anticon + span {
+    display: inline-block;
+    max-width: 0;
+    opacity: 0;
+    transition: all 0.2s;
+  }
+  & + .web-layout {
+    padding-left: 80px;
+    transition: all 0.2s;
   }
 }
 
