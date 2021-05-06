@@ -21,11 +21,12 @@ module.exports = {
     lintOnSave: false,
     productionSourceMap: false, //打包不生成.map文件，加快打包速度
 
-    configureWebpack: () => {
+    configureWebpack: (config) => {
       if (process.env.NODE_ENV === 'production') {
         // 生产环境配置
       } else {
         // 开发环境配置
+        config.devtool = 'source-map' // vscode debugger 配置
       }
       return {
         plugins: [
