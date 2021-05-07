@@ -96,51 +96,53 @@ export default defineComponent({
 </script>
 
 <style lang="less">
-  .login-container {
-    width: 100%;
-    height: 100vh;
-    background: url('../../assets/login_images/login_background.png');
-    background-size: cover;
-    &-form {
-      width: 350px;
-      height: 380px;
-      padding: 4vh;
-      margin-top: calc((100vh - 380px) / 2);
-      margin-right: 20px;
-      margin-left: 20px;
-      background: url('~@/assets/login_images/login_form.png');
-      background-size: 100% 100%;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px 0 rgba(7, 17, 27, 0.06);
-    }
-    &-hello {
-      font-size: 32px;
-      color: #fff;
-    }
-    &-title {
-      margin-bottom: 30px;
-      font-size: 20px;
-      color: #fff;
-    }
-    &-tips {
-      position: fixed;
-      bottom: 20px;
-      width: 100%;
-      height: 40px;
-      color: rgba(255, 255, 255, 0.856);
-      text-align: center;
-    }
-    .ant-col {
-      width: 100%;
-      padding: 0 10px 0 10px;
-    }
-    .ant-input {
-      height: 35px;
-    }
-    .ant-btn {
-      width: 100%;
-      height: 45px;
-      border-radius: 99px;
-    }
+@import '~@/common/web';
+
+.login-container {
+  width: 100%;
+  height: 100vh;
+  background: url('../../assets/login_images/login_background.png');
+  background-size: cover;
+  &-form {
+    width: 350px;
+    height: 380px;
+    padding: 4vh;
+    margin-top: calc((100vh - 380px) / 2);
+    margin-right: 20px;
+    margin-left: 20px;
+    background: url('~@/assets/login_images/login_form.png');
+    background-size: 100% 100%;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px 0 rgba(7, 17, 27, 0.06);
   }
+  &-hello {
+    font-size: 32px;
+    color: #fff;
+  }
+  &-title {
+    margin-bottom: 30px;
+    font-size: 20px;
+    color: #fff;
+  }
+  &-tips {
+    position: fixed;
+    bottom: @web-margin;
+    width: 100%;
+    height: 40px;
+    color: rgba(255, 255, 255, 0.856);
+    text-align: center;
+  }
+  .ant-col {
+    width: 100%;
+    padding: 0 10px 0 10px;
+  }
+  .ant-input {
+    height: 35px;
+  }
+  .ant-btn {
+    width: 100%;
+    height: 45px;
+    border-radius: 99px;
+  }
+}
 </style>

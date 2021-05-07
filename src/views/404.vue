@@ -75,6 +75,8 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
+@import '~@/common/web';
+
 .error-container {
   position: relative;
   height: 100vh;
@@ -148,7 +150,7 @@ export default defineComponent({
       overflow: hidden;
 
       &-oops {
-        margin-bottom: 20px;
+        margin-bottom: @web-margin;
         font-size: 32px;
         font-weight: bold;
         line-height: 40px;

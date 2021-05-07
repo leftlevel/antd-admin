@@ -160,6 +160,8 @@ export default defineComponent({
 </script>
 
 <style lang="less">
+@import '~@/common/web';
+
 #components-layout-demo-custom-trigger .trigger {
   font-size: 18px;
   line-height: 64px;
@@ -188,7 +190,7 @@ export default defineComponent({
   left: 0;
   overflow: auto;
   .web-menu {
-    height: calc(100hv - 65px);
+    height: calc(100hv - @web-header-height);
   }
 }
 
@@ -215,13 +217,13 @@ export default defineComponent({
   .ant-col + .ant-col {
     display: flex;
     justify-content: flex-end;
-    padding: 0 20px
+    padding: 0 @web-padding;
   }
   .trigger {
-    height: 65px;
-    padding: 0 20px;
+    height: @web-header-height;
+    padding: 0 @web-padding;
     font-size: 18px;
-    line-height: 65px;
+    line-height: @web-header-height;
     cursor: pointer;
     transition: color 0.3s;
     &:hover {

@@ -36,6 +36,8 @@ export default defineComponent({
 </script>
 
 <style lang="less">
+@import '~@/common/web';
+
 .fade-transform-leave-active,
 .fade-transform-enter-active {
   transition: all 0.2s;
@@ -49,12 +51,12 @@ export default defineComponent({
   transform: translateX(30px);
 }
 .web-content {
-  min-height: calc(100vh - 65px - 4 * 20px) !important;
+  min-height: calc(100vh - @web-header-height - 4 * @web-padding) !important;
   padding: 20px;
   margin: 20px;
   background: #fff;
   .error-container {
-    height: calc(100vh - 65px - 5 * 20px - 20px) !important;
+    height: calc(100vh - @web-header-height - 5 * @web-padding - @web-margin) !important;
   }
 }
 </style>

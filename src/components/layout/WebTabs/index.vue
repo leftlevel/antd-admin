@@ -216,12 +216,14 @@ export default defineComponent({
 </script>
 
 <style lang="less">
+@import '~@/common/web';
+
 .web-tabs {
-  padding: 0 20px;
+  padding: 0 @web-margin;
   background: #ffffff;
   &-left-panel {
     float: left;
-    width: calc(100% - 52px - 20px - 20px);
+    width: calc(100% - 52px - @web-margin - @web-margin);
   }
   &-right-panel {
     float: left;
