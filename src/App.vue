@@ -20,4 +20,23 @@ export default defineComponent({
 
 
 <style lang="less">
+@import '~@/common/web';
+
+body::-webkit-scrollbar {
+  width: 4px;
+  border-radius: 4px;
+  background-color: @color-primary-1;
+}
+body::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: @color-primary-2;
+  &:hover {
+    background-color: @color-primary-1;
+  }
+}
+body::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 1px rgba(0, 0, 0, 0);
+  border-radius: 4px;
+  background: @color-background-base;
+}
 </style>
