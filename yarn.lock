@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@amap/amap-jsapi-loader@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.npm.taobao.org/@amap/amap-jsapi-loader/download/@amap/amap-jsapi-loader-1.0.1.tgz#9ec4b4d5d2467eac451f6c852e35db69e9f9f0c0"
+  integrity sha1-nsS01dJGfqxFH2yFLjXbaen58MA=
+
 "@ant-design-vue/use@^0.0.1-0":
   version "0.0.1-alpha.9"
   resolved "https://registry.npm.taobao.org/@ant-design-vue/use/download/@ant-design-vue/use-0.0.1-alpha.9.tgz#b7df26150469391383ba1c2dd4ba250267a58411"

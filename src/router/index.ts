@@ -51,6 +51,12 @@ export const asyncRoutes: Array<any> = [
         name: 'Icon',
         component: () => import('@/views/webComponent/icon/index.vue'),
         meta: { title: '图标', icon: 'remixicon-line'},
+      },
+      {
+        path: 'map',
+        name: 'Map',
+        component: () => import('@/views/webComponent/map/index.vue'),
+        meta: { title: '高德地图', icon: 'map-pin-line'},
       }
     ]
   },
