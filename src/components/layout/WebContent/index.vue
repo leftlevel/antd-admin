@@ -15,7 +15,7 @@
 <script lang='ts'>
 import { computed, defineComponent } from 'vue'
 import { useStore } from 'vuex'
-import Loading from '@/components/layout/Loding/index.vue'
+import Loading from '@/components/layout/Loading/index.vue'
 
 export default defineComponent({
   name: 'WebContent',
